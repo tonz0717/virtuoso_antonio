@@ -20,7 +20,6 @@
             <img src="artwork5.jpg" alt="Artwork 5">
             <img src="artwork6.jpg" alt="Artwork 6">
             <img src="artwork7.jpg" alt="Artwork 7">
-            <!-- Clone images for seamless transition -->
             <img src="artwork1.jpg" alt="Artwork 1">
             <img src="artwork2.jpg" alt="Artwork 2">
             <img src="artwork3.jpg" alt="Artwork 3">
@@ -57,10 +56,14 @@
 <section id="portfolio">
   <h2>My Work</h2>
   <div class="gallery">
-      <!-- Add your artwork here -->
-      <img src="art1.jpg" alt="Artwork 1">
-      <img src="art2.jpg" alt="Artwork 2">
-      <!-- More images -->
+      <img src="artwork1.jpg" alt="Artwork 1">
+      <img src="artwork2.jpg" alt="Artwork 2">
+      <img src="artwork3.jpg" alt="Artwork 3">
+      <img src="artwork4.jpg" alt="Artwork 4">
+      <img src="artwork5.jpg" alt="Artwork 5">
+      <img src="artwork6.jpg" alt="Artwork 6">
+      <img src="artwork7.jpg" alt="Artwork 7">
+      
   </div>
 
 </section>
@@ -82,22 +85,22 @@
 </footer>
 
 <script>
-  // Carousel functionality
+  
   let currentIndex = 0;
   const slides = document.querySelectorAll('.carousel-slide img');
   const totalSlides = slides.length;
 
   function showSlide(index) {
-      const offset = -index * 100; // Change based on the number of images
+      const offset = -index * 100; 
       document.querySelector('.carousel-slide').style.transform = `translateX(${offset}%)`;
   }
 
   function nextSlide() {
-      currentIndex = (currentIndex + 1) % totalSlides; // Loop back to the first slide
+      currentIndex = (currentIndex + 1) % totalSlides; 
       showSlide(currentIndex);
   }
 
-  setInterval(nextSlide, 1000); // Change slide every 3 seconds
+  setInterval(nextSlide, 1000); 
 </script>
 
 </body>
