@@ -1,0 +1,134 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #1a1f28; /* Dark blue background */
+    color: #e0e0e0; /* Light grey text for contrast */
+}
+
+header {
+    background: #1a1f28; /* Dark blue header */
+    color: #e0e0e0; /* Light text color */
+    padding: 1rem;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #a0e23b; /* Neon green for links */
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+section {
+    padding: 2rem;
+}
+
+/* Jumbotron with Carousel */
+.jumbotron {
+    position: relative;
+    text-align: center;
+    color: #a0e23b; /* Neon green text */
+    height: 100vh;
+    overflow: hidden;
+}
+
+.jumbotron h1 {
+    font-size: 4em;
+    margin-top: 0;
+    padding: 20px;
+    z-index: 2;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20%; /* Adjust as needed */
+}
+
+.jumbotron p {
+    font-size: 1.5em; /* Adjust font size */
+    z-index: 2;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10%; /* Space from the name */
+}
+
+.carousel-container {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+.carousel-slide {
+    display: flex;
+    width: 200%; /* Adjusted to accommodate cloned images */
+    animation: slide 10s infinite; /* Animation duration */
+}
+
+.carousel-slide img {
+    width: 100vw; /* Full width */
+    height: 100vh; /* Full height */
+    object-fit: cover;
+    filter: grayscale(10%); /* Desaturate images */
+}
+
+@keyframes slide {
+    0% { transform: translateX(0); }
+    10% { transform: translateX(0); } /* Hold first image */
+    15% { transform: translateX(-100%); } /* Move to second */
+    25% { transform: translateX(-100%); } /* Hold second */
+    30% { transform: translateX(-200%); } /* Move to third */
+    40% { transform: translateX(-200%); } /* Hold third */
+    45% { transform: translateX(-300%); } /* Move to fourth */
+    55% { transform: translateX(-300%); } /* Hold fourth */
+    60% { transform: translateX(-400%); } /* Move to fifth */
+    70% { transform: translateX(-400%); } /* Hold fifth */
+    75% { transform: translateX(-500%); } /* Move to sixth */
+    85% { transform: translateX(-500%); } /* Hold sixth */
+    90% { transform: translateX(-600%); } /* Move to seventh */
+    100% { transform: translateX(0); } /* Loop back */
+}
+
+
+/* Footer styles */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background: #1a1f28; /* Dark blue footer */
+    color: #e0e0e0;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.gallery img {
+    border: 2px solid #a0e23b; /* Neon green border for images */
+    transition: transform 0.2s; /* Smooth transition for hover effect */
+}
+
+.gallery img:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+@media (max-width: 600px) {
+    nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+}
