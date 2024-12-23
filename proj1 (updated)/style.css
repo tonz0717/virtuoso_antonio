@@ -1,0 +1,756 @@
+/*FONT IMPORTS*/
+
+@import url('https://fonts.googleapis.com/css2?family=Alike&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alike&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Righteous&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Leckerli+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+.varela-round-regular {
+  font-family: "Varela Round", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.ubuntu-medium {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+/*FONT IMPORTS*/
+
+body {
+  font-family: 'Atkinson Hyperlegible', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #FFE1E1;
+
+}
+
+h1, h2 {
+  font-family: 'IBM Plex Serif', serif;
+  color: #632a2a; /* Use white for headings to contrast against the dark background */
+}
+
+* {
+  overflow-x: hidden;
+}
+
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centers the navbar items */
+  align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #FFE1E1;
+  z-index: 100; /* Ensure it appears above other content */
+  padding: 10px 20px; /* Optional: Adds padding to prevent links from touching the edges */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a slight shadow for visual depth */
+}
+
+
+.navbar a {
+  font-family: "Ubuntu";
+  font-size: 1rem;
+  font-weight: 700;
+  color: #793337;
+  text-decoration: none;
+  padding-left: 8px 12px;
+  margin: 0 20px;
+  text-align: center; /* Ensures text is centered within each link */
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column; /* Stack items vertically */
+  }
+
+  .navbar a {
+    padding: 5px 0;
+    margin: 5px 0;
+  }
+}
+
+.navbar a:hover {
+  color: #FF4747; /* Slightly darker pink for hover effect */
+  text-decoration: underline;
+  text-shadow: none;
+}
+
+/*SLIDING HEADER*/
+
+header {
+  position: relative;
+  height: 900px; /* Adjust the height of the header */
+  overflow: hidden;
+}
+
+.slider-frame{
+  overflow: hidden;
+  display: grid;
+  height: 1080px;
+  width: 100%;
+  place-items: center;
+  background: linear-gradient(to bottom, transparent, #FFE1E1); /* Gradient from transparent to background color */
+  position: relative;
+
+  background-image: url(images/CAKES/header_bg.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+@media (max-width: 768px) {
+  header {
+    height: 30vh; /* Reduce height for smaller screens */
+  }
+
+  .slider-frame {
+    height: 30vh;
+    background-position: center top;
+  }
+}
+
+
+/*LOGO*/
+
+.text-overlay {
+  height: 1000px;
+  width: 1000px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  padding-top: 40px;
+  color: #97074f;
+  z-index: 1;
+
+  /* Flexbox centering */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden; /* Ensures the rotating background doesn't exceed the container */
+}
+
+.text-overlay::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%; /* Extend beyond the container width */
+  height: 70%; /* Extend beyond the container height */
+  transform: translate(-50%, -50%); /* Center the pseudo-element */
+  background-image: url('images/doily.png'); /* Replace with your image URL */
+  background-size: cover;
+  background-position: center;
+  z-index: -1; /* Place behind the text */
+
+  /* Rotate animation */
+  animation: rotate-bg 70s linear infinite;
+}
+
+/* Keyframes for rotating the background */
+@keyframes rotate-bg {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+
+.text-overlay h1 {
+  font-size: 2em;  
+  margin: 0;
+}
+
+.text-overlay p {
+  font-size: 1.2em;
+}
+
+
+/* Bakery Delight Text Below Carousel */
+.bakery-title {
+  text-align: center;
+  margin: 20px 0;
+  font-family: Leckerli One;
+  font-size: 3rem;
+  color: #97074f; /* Dark brown text for visibility */
+}
+
+.product-section {
+  position: relative; /* Enables positioning for the overlay (if needed) */
+  padding: 60px 20px;
+  text-align: center;
+
+  /* Background image settings */
+  background-image: url('images/bg3.jpg'); /* Replace with the actual path to your image */
+  background-size: cover; /* Ensures the image covers the entire section */
+  background-position: center; /* Centers the background image */
+  background-repeat: no-repeat; /* Prevents the image from tiling */
+
+  /* Optional: Overlay effect */
+  color: #6B4F4F; /* Text color to contrast with the background image */
+}
+
+.product-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 225, 225, 0.7); /* Adjust the color and transparency of the overlay */
+  z-index: -1; /* Keeps the overlay behind the content */
+}
+
+
+.product-section h1 {
+  color: #422e1b; /* Dark brown for title */
+}
+
+.product-item h3 {
+  font-family: 'Alike', serif; /* Same as headings for consistency */
+  color: #422e1b; /* Dark brown for text, aligning with your overall design */
+  font-size: 1.4rem; /* Slightly larger for better readability */
+  font-weight: bold; /* Ensures product names stand out */
+  margin-bottom: 120x; /* Provides spacing between name and description */
+}
+
+.product-item p {
+  color: #705952; /* Subtle warm brown for product descriptions */
+  font-family: 'Atkinson Hyperlegible', sans-serif; /* Matches body font for consistency */
+}
+
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive columns */
+  gap: 20px;
+  max-width: 1920px; /* Set a maximum width for the grid */
+  margin: 0 auto; /* Centers the grid horizontally */
+  padding: 20px;
+}
+
+
+.product-item {
+  background-color: #FFFAF8; /* Very light pastel pink */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.product-item img {
+  width: 100%; /* Ensures the image takes up the full width of its container */
+  height: 200px; /* Set a fixed height for the images */
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+  border-radius: 8px;
+  transition: transform 0.3s;
+}
+
+.product-item:hover img {
+  transform: scale(1.05);
+}
+
+.view-details-btn {
+  background-color: #ff3366;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  padding: 7px 20px;
+  font-family: Inter Tight;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.view-details-btn:hover {
+  background-color: #e02557;
+  transform: scale(1.1);
+}
+
+.view-details-btn:active {
+  background-color: #e02557;
+  transform: scale(0.95);
+}
+
+
+/* Modal Background */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px); /* Optional: Apply a blur effect to the background */
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
+
+/* Modal Content */
+.modal-content {
+  display: flex; /* Use Flexbox for side-by-side layout */
+  background-color: #fff;
+  border-radius: 10px;
+  justify-content: space-between; /* Distribute space between image and details */
+  align-items: center; /* Vertically center the items */
+  padding: 30px;
+  width: 700px;
+  max-width: 100%;
+  text-align: left; /* Align text to the left */
+  margin: auto;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(202, 72, 163, 0.582);
+  transform: scale(0.8);
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease;
+}
+/* When modal is active, make it visible with smooth transition */
+.modal.open {
+  display: flex;
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Modal Image */
+.modal-image {
+  width: 300px; /* Set a fixed width for the image */
+  height: 500px; /* Keep aspect ratio intact */
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.modal-details {
+  flex: 1; /* Allow text content to take remaining space */
+  padding-left: 20px; /* Add some space between the image and text */
+  font-family: 'Inter Tight'; /* Consistent font style */
+}
+
+/* Modal Title */
+.modal-product-name {
+  font-size: 30px;
+  font-family: 'Alike';
+  margin-top: 15px;
+  color: #422e1b; /* Dark brown */
+}
+
+/* Modal Description */
+.modal-description {
+  font-size: 16px;
+  font-family: Inter Tight;
+  margin: 10px 0;
+  color: #705952;
+}
+
+/* Variant Dropdown and Quantity Input */
+select {
+  width: 100%;
+  font-family: Inter Tight;
+  font-size: 1em;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ff8d8d;
+}
+
+/* Improved Quantity Selector UI */
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ff8d8d;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  width: fit-content;
+  padding: 8px;
+  margin: 10px 0;
+}
+
+.quantity-btn {
+  background-color: #97074f;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  user-select: none;
+}
+
+.quantity-btn:hover {
+  background-color: #aa1d6f;
+  transform: scale(1.1);
+}
+
+.quantity-btn:active {
+  background-color: #85064b;
+  transform: scale(0.95);
+}
+
+#quantity {
+  width: 50px;
+  text-align: center;
+  font-size: 18px;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  margin-left: 10px;
+}
+
+#quantity:focus {
+  border: 1px solid #97074f;
+  box-shadow: 0 0 5px rgba(151, 7, 79, 0.5);
+}
+
+.quantity-btn {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.quantity-btn:hover {
+  background-color: #aa1d6f;
+  transform: scale(1.1);
+}
+
+.quantity-btn:active {
+  background-color: #85064b;
+  transform: scale(0.95);
+}
+
+.total-price-section {
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 3px;
+  right: 10px;
+  font-size: 30px;
+  color: #FFB6B9;
+  cursor: pointer;
+}
+
+/*QUANTITY SELECTOR*/
+
+/* Action Buttons (Add to Cart, Order Now) */
+.modal-btn {
+  background-color: #FFB6B9; /* Soft pink */
+  border: none;
+  color: white;
+  padding: 12px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  margin: 10px 5px;
+  transition: background-color 0.3s ease;
+}
+
+.addtocart-btn {
+  background-color: #97074f;
+  position:relative;
+  color: white;
+  font-size: 20px;
+  font-family: Alike;
+  margin-top: 15px;
+  padding: 12px 70px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.addtocart-btn:hover {
+  background-color: #aa1d6f;
+}
+
+.addtocart-btn:active {
+  background-color: #85064b;
+}
+.modal-btn:hover {
+  background-color: #FF4747; /* Slightly darker pink */
+}
+
+/* Add responsiveness */
+@media (max-width: 600px) {
+  .modal-content {
+      width: 90%;
+      padding: 15px;
+  }
+}
+
+
+.baker-info-section {
+  background-color: #FFEBE8; /* Lighter shade of the gradient */
+  color: #6B4F4F;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.baker-info-section h2 {
+  color: #422e1b; /* Dark brown for the title */
+}
+
+.baker-info-section h3 {
+  color: #705952;
+  font-weight: normal;
+}
+
+.baker-info-section p {
+  max-width: 700px;
+  margin: 0 auto;
+  color: #6B4F4F;
+}
+
+.baker-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.baker {
+  text-align: center;
+  color: #422e1b; /* Dark brown for names */
+}
+
+.baker img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #6B4F4F;
+}
+
+.baker-name {
+  margin-top: 10px;
+  font-size: 1.2rem;
+}
+
+.footer {
+  background-color: #FFEBE8; /* Matches baker info section */
+  color: #6B4F4F;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.footer-column h4 {
+  font-family: 'IBM Plex Serif', serif;
+  margin-bottom: 15px;
+  color: #6B4F4F;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column li {
+  margin: 5px 0;
+}
+
+.footer-column a {
+  color: #6B4F4F;
+  text-decoration: none;
+}
+
+.footer-column a:hover {
+  color: #FF4747; /* Hover effect on links */
+  text-decoration: underline;
+}
+
+.footer p {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #6B4F4F;
+}
+
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-column {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+}
+
+/*cartmodal */
+/* Updated Cart Modal Styles */
+/* Modal Container */
+#cartModal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.6); /* Slightly darkened background */
+  }
+
+
+/* Modal Content */
+.cartmodal-content {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 25px;
+    width: 90%;
+    max-width: 700px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    font-family: 'Ubuntu', sans-serif;
+    color: #333;
+    position: relative;
+    margin: auto;
+    animation: slideIn 0.4s ease;
+}
+
+/* Modal Header */
+.cartmodal-content h2 {
+    font-family: 'Leckerli One', cursive;
+    font-size: 2.5rem;
+    color: #ff3366;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Table Styles */
+#cartTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#cartTable thead {
+    background-color: #ff3366;
+    color: #fff;
+}
+
+#cartTable th, 
+#cartTable td {
+    text-align: left;
+    padding: 12px 15px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #ddd;
+}
+
+#cartTable tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#cartTable tbody tr:hover {
+    background-color: #ffe5e9;
+}
+
+#cartTable th {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Actions Column */
+#cartTable td .action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+#cartTable .action-buttons button {
+    background-color: #ff3366;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background-color 0.3s ease;
+}
+
+#cartTable .action-buttons button:hover {
+    background-color: #e02557;
+}
+
+/* Footer */
+.cart-footer {
+    text-align: center;
+}
+
+#proceedToCheckoutButton {
+    background-color: #ff3366;
+    color: #fff;
+    font-size: 1rem;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Inter Tight', sans-serif;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+#proceedToCheckoutButton:hover {
+    background-color: #e02557;
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 30px;
+    color: #ff4747;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #ff0000;
+}
+
+/* Animations */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
