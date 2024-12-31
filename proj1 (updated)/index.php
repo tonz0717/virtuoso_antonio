@@ -57,8 +57,7 @@ $conn->close();
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="path/to/script.js"></script>
-  <script src="cart.js"></script>
+  <script src="script.js"></script>
   <link rel="stylesheet" href="style.css">
 
 </head>
@@ -68,9 +67,11 @@ $conn->close();
 
 <div class="navbar">
   <div>
-    <a href="#home">Home</a>
+    <a href="index.php">Home</a>
     <a href="#product">Products</a>
     <a href="#cart" id="viewCartButton">View Cart</a>
+    <a href="orders.php">Order History</a>
+
     
 
     <?php if (!isset($_SESSION['user'])): ?>
@@ -143,23 +144,24 @@ $conn->close();
             </select>
 
             <label for="quantity">Quantity:</label>
-            <div class="quantity-selector">
-              <button type="button" id="decreaseQuantity" class="quantity-btn">-</button>
-              <input type="number" id="quantity" name="quantity" min="1" value="1" readonly>
-              <button type="button" id="increaseQuantity" class="quantity-btn">+</button>
-            </div>
+<div class="quantity-selector">
+    <button type="button" id="decreaseQuantity" class="quantity-btn">-</button>
+    <input type="number" id="quantity" name="quantity" min="1" value="1" readonly>
+    <button type="button" id="increaseQuantity" class="quantity-btn">+</button>
+</div>
 
-            <div class="total-price-section">
-                <strong>Total Price:</strong> $<span id="totalPrice">0.00</span>
-            </div>
+<div class="total-price-section">
+    <strong>Total Price:</strong> $<span id="totalPrice">0.00</span>
+</div>
 
-            <!-- Hidden Form for Add to Cart -->
-            <form id="addToCartForm" action="add_to_cart.php" method="POST">
-                <input type="hidden" name="productId" id="productId">
-                <input type="hidden" name="variant" id="variant">
-                <input type="hidden" name="quantity" id="quantityInput">
-                <button type="submit" class="addtocart-btn">Add to Cart</button>
-            </form>
+<!-- Hidden Form for Add to Cart -->
+<form id="addToCartForm" action="add_to_cart.php" method="POST">
+    <input type="hidden" name="productId" id="productId" value="1"> <!-- Example product ID -->
+    <input type="hidden" name="variant" id="variant" value="1"> <!-- Example variant ID -->
+    <input type="hidden" name="quantity" id="quantityInput" value="1">
+    <button type="submit" class="addtocart-btn">Add to Cart</button>
+</form>
+
         </div>
     </div>
 </div>
@@ -237,6 +239,7 @@ document.querySelectorAll('.view-details-btn').forEach(button => {
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('productModal');
     const quantityInput = document.getElementById('quantity');
+    const hiddenQuantityInput = document.getElementById('quantityInput'); // Hidden input for form submission
     const totalPriceElement = document.getElementById('totalPrice');
     const variantSelect = document.getElementById('modalVariants');
     const increaseButton = document.getElementById('increaseQuantity');
@@ -250,14 +253,25 @@ document.addEventListener('DOMContentLoaded', () => {
         totalPriceElement.textContent = (price * quantity).toFixed(2);
     };
 
+    // Sync the visible quantity with the hidden input
+    const syncQuantityToForm = () => {
+        hiddenQuantityInput.value = quantityInput.value;
+    };
+
     // Event listener for variant selection change
-    variantSelect.addEventListener('change', updateTotalPrice);
+    if (variantSelect) {
+        variantSelect.addEventListener('change', () => {
+            updateTotalPrice();
+            syncQuantityToForm();
+        });
+    }
 
     // Event listeners for quantity buttons
     increaseButton.addEventListener('click', () => {
         const currentValue = parseInt(quantityInput.value, 10);
         quantityInput.value = currentValue + 1;
         updateTotalPrice();
+        syncQuantityToForm();
     });
 
     decreaseButton.addEventListener('click', () => {
@@ -265,6 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentValue > 1) {
             quantityInput.value = currentValue - 1;
             updateTotalPrice();
+            syncQuantityToForm();
         }
     });
 
@@ -272,10 +287,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.view-details-btn').forEach(button => {
         button.addEventListener('click', () => {
             quantityInput.value = 1; // Reset quantity to 1
+            syncQuantityToForm(); // Sync hidden input
             updateTotalPrice(); // Update total price
         });
     });
 });
+
 </script>
 </body>
 </html>

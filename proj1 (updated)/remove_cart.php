@@ -1,35 +1,26 @@
 <?php
-session_start();
-header('Content-Type: application/json');
-include('db.php');
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $cartId = intval($_POST['cart_id']);
 
-$response = ['success' => false, 'message' => ''];
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cart_id'])) {
-    $cart_id = intval($_POST['cart_id']);
-
-    try {
-        $sql = "DELETE FROM cart WHERE cart_id = ?";
-        $stmt = $conn->prepare($sql);
-        if (!$stmt) {
-            throw new Exception('Prepare failed: ' . $conn->error);
-        }
-
-        $stmt->bind_param('i', $cart_id);
-        if ($stmt->execute()) {
-            $response['success'] = true;
-            $response['message'] = 'Cart item removed successfully.';
-        } else {
-            throw new Exception('Execution failed: ' . $stmt->error);
-        }
-        $stmt->close(); // Close the statement
-    } catch (Exception $e) {
-        $response['message'] = 'Error: ' . $e->getMessage();
+    if ($cartId <= 0) {
+        echo json_encode(['success' => false, 'message' => 'Invalid cart ID.']);
+        exit();
     }
-} else {
-    $response['message'] = 'Invalid request.';
-}
 
-// Send the JSON response
-echo json_encode($response);
+    require 'db_connection.php'; // Ensure DB connection file is included
+
+    $sql = "DELETE FROM cart WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $cartId);
+
+    if ($stmt->execute()) {
+        echo json_encode(['success' => true]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Failed to remove item.']);
+    }
+
+    $stmt->close();
+    $conn->close();
+    exit();
+}
 ?>

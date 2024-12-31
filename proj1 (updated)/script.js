@@ -92,75 +92,21 @@ window.addEventListener('click', function (event) {
     }
 });
 
-// Function to load cart items
-function loadCartItems() {
-    $.ajax({
-        url: 'fetch_cart.php',
-        method: 'GET',
-        success: function (data) {
-            if (data.success) {
-                const cartTableBody = $('#cartTable tbody');
-                cartTableBody.empty(); // Clear table before appending new rows
-
-                // Populate cart items
-                data.data.forEach(item => {
-                    const price = parseFloat(item.price).toFixed(2);
-                    const quantity = parseInt(item.quantity, 10);
-                    const totalPrice = (price * quantity).toFixed(2);
-
-                    cartTableBody.append(`
-                        <tr data-cart-id="${item.cart_id}">
-                            <td>${item.product_name}</td>
-                            <td>${item.variant_name}</td>
-                            <td>
-                                <button class="decrease-btn">-</button>
-                                <span class="quantity">${quantity}</span>
-                                <button class="increase-btn">+</button>
-                            </td>
-                            <td class="price" data-price="${price}">$${price}</td>
-                            <td class="total">$${totalPrice}</td>
-                            <td>
-                                <button class="remove-btn">Remove</button>
-                            </td>
-                        </tr>
-                    `);
-                });
-
-                // Attach listeners to buttons
-                attachCartActionListeners();
-            } else {
-                alert(data.message); // Show error message if fetch fails
-            }
-        },
-        error: function (xhr, status, error) {
-            console.error(`AJAX Error: ${error}`);
-            alert('Error fetching cart items.');
-        }
+// Function to attach event listeners for cart actions
+function attachCartActionListeners() {
+    // Attach event listeners for increase, decrease, and remove buttons
+    document.querySelectorAll('.increase-btn').forEach(button => {
+        button.addEventListener('click', function () {
+            const row = this.closest('tr');
+            const cartId = row.getAttribute('data-cart-id');
+            const quantitySpan = row.querySelector('.quantity');
+            let quantity = parseInt(quantitySpan.textContent);
+            quantity++;
+            quantitySpan.textContent = quantity;
+            updateRowTotal($(row), quantity);
+            updateCartQuantity(cartId, quantity);
+        });
     });
-}
-
-// Attach listeners for increase, decrease, and remove actions
-document.querySelectorAll('.increase-btn').forEach(button => {
-    button.addEventListener('click', function () {
-        // Log the button that was clicked
-        console.log('Increase button clicked:', this);
-
-        const row = this.closest('tr'); // Find the parent row
-        const cartId = row.getAttribute('data-cart-id'); // Get the cart ID
-        const quantitySpan = row.querySelector('.quantity'); // Get the quantity span
-        let quantity = parseInt(quantitySpan.textContent); // Get current quantity
-
-        // Increment quantity
-        quantity++;
-        quantitySpan.textContent = quantity; // Update the quantity display
-        console.log(`Cart ID: ${cartId}, New Quantity: ${quantity}`); // Log cart ID and new quantity
-
-        // Update row total and server
-        updateRowTotal($(row), quantity);
-        updateCartQuantity(cartId, quantity);
-    });
-});
-
 
     document.querySelectorAll('.decrease-btn').forEach(button => {
         button.addEventListener('click', function () {
@@ -185,7 +131,7 @@ document.querySelectorAll('.increase-btn').forEach(button => {
             removeCartItem(cartId);
         });
     });
-
+}
 
 // Function to update row total
 function updateRowTotal(row, quantity) {
@@ -223,7 +169,6 @@ function updateCartQuantity(cartId, quantity) {
     });
 }
 
-
 // Remove cart item on the server
 function removeCartItem(cartId) {
     $.ajax({
@@ -242,6 +187,61 @@ function removeCartItem(cartId) {
         }
     });
 }
+
+
+// Function to load cart items
+function loadCartItems() {
+    $.ajax({
+        url: 'fetch_cart.php',
+        method: 'GET',
+        success: function (data) {
+            if (data.success) {
+                const cartTableBody = $('#cartTable tbody');
+                cartTableBody.empty(); // Clear table before appending new rows
+
+                // Populate cart items
+                data.data.forEach(item => {
+                    const price = parseFloat(item.price).toFixed(2);
+                    const quantity = parseInt(item.quantity, 10);
+                    const totalPrice = (price * quantity).toFixed(2);
+
+                    cartTableBody.append(`
+                        <tr data-cart-id="${item.cart_id}">
+                            <td>${item.product_name}</td>
+                            <td>${item.variant_name}</td>
+                            <td>
+                                <button class="decrease-btn">-</button>
+                                <span class="quantity">${quantity}</span>
+                                <button class="increase-btn">+</button>
+                            </td>
+                            <td class="price" data-price="${price}">$${price}</td>
+                            <td class="total">$${totalPrice}</td>
+                            <td>
+                                <button class="remove-btn">Remove</button>
+                            </td>
+                        </tr>
+                    `);
+                });
+
+                // Attach listeners to buttons
+                attachCartActionListeners();
+
+            } else {
+                alert(data.message); // Show error message if fetch fails
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error(`AJAX Error: ${error}`);
+            alert('Error fetching cart items.');
+        }
+    });
+}
+
+
+// Ensure this function is called after the document is ready
+$(document).ready(function() {
+    loadCartItems();
+});
 
 // Add event listener to the "Proceed to Checkout" button
 document.getElementById('proceedToCheckoutButton').addEventListener('click', function () {
@@ -268,3 +268,6 @@ fetch('fetch_cart.php', {
         }
     })
     .catch(error => console.error('Fetch Error:', error));
+
+
+   

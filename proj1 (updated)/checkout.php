@@ -41,13 +41,16 @@ if (isset($_SESSION['user']) && !empty($_SESSION['user'])) {
                 $cartItems[] = $row;
             }
         } else {
-            $response['message'] = 'User not found in login_credentials.';
+            echo 'User not found.';
         }
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
     }
 }
 ?>
+
+<!-- HTML for displaying cart (no changes needed here) -->
+
 
 <!DOCTYPE html>
 <html lang="en">

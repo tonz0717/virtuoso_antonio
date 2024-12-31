@@ -1,40 +1,27 @@
 <?php
-session_start();
-header('Content-Type: application/json');
-include('db.php');
-
-$response = ['success' => false, 'message' => ''];
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cart_id'], $_POST['quantity'])) {
-    $cart_id = intval($_POST['cart_id']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $cartId = intval($_POST['cart_id']);
     $quantity = intval($_POST['quantity']);
 
-    if ($quantity > 0) {
-        try {
-            $sql = "UPDATE cart SET quantity = ? WHERE cart_id = ?";
-            $stmt = $conn->prepare($sql);
-
-            if (!$stmt) {
-                throw new Exception('Prepare failed: ' . $conn->error);
-            }
-
-            $stmt->bind_param('ii', $quantity, $cart_id);
-
-            if ($stmt->execute()) {
-                $response['success'] = true;
-                $response['message'] = 'Cart item quantity updated successfully.';
-            } else {
-                throw new Exception('Execution failed: ' . $stmt->error);
-            }
-        } catch (Exception $e) {
-            $response['message'] = 'Error: ' . $e->getMessage();
-        }
-    } else {
-        $response['message'] = 'Invalid quantity.';
+    if ($cartId <= 0 || $quantity <= 0) {
+        echo json_encode(['success' => false, 'message' => 'Invalid cart ID or quantity.']);
+        exit();
     }
-} else {
-    $response['message'] = 'Invalid request.';
-}
 
-echo json_encode($response);
+    require 'db_connection.php'; // Ensure DB connection file is included
+
+    $sql = "UPDATE cart SET quantity = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ii', $quantity, $cartId);
+
+    if ($stmt->execute()) {
+        echo json_encode(['success' => true]);
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Failed to update quantity.']);
+    }
+
+    $stmt->close();
+    $conn->close();
+    exit();
+}
 ?>
